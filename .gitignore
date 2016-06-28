@@ -1,0 +1,9 @@
+/build
+/.classpath
+/.project
+target/
+/tuloteroweb/nb-configuration.xml
+.idea/
+.idea/**
+.idea/dataSources.xml
+*.iml

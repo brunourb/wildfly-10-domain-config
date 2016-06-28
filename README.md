@@ -119,4 +119,39 @@ When slave is started, we should see the following:
 ![alt text](https://raw.githubusercontent.com/marcoslop/wildfly-10-domain-config/master/images/slave_started.png "Slave Started")
 
 
+## How to use Infinispan
+
+In this repo there is a simple war that can be installed in the domain. It simple allows requests to put a message in the default shared cache and allows requests to retrieve the last message saved. 
+
+We are going to save the message in the master instance and retrieve the message from slave1. The message should be the same.
+
+First of all we have to generate the war. For that simple type:
+
+        mvn clean package
+
+Then copy 'target/domain.war' to any node that has access to the management interface on master. 
+
+Deploy the war on master instance:
+
+        wildfly-10.0.0.Final/bin/jboss-cli.sh -c --controller=10.135.1.180:9990 "deploy domain.war --server-groups=main-server-group"
+
+And you will see that the war is deployed in both instances. If you see logs carefully you will notice that JGroups shows us that there is a channel where 2 nodes are conected:
+
+![alt text](https://raw.githubusercontent.com/marcoslop/wildfly-10-domain-config/master/images/infinispan_started.png "Infinispan connected")
+
+If you see this is that everything is going well :-)
+
+If we get the message from slave we should see that it´s empty:
+
+        curl http://domain-slave1:8080/domain/rest/message
+
+Now we are going to save a message in master:
+
+        curl http://domain-master:8080/domain/rest/message --data "message=Message saved in Master"
+
+If now we obtain again the message from slave we will receive the message "Message saved in Master"
+
+        curl http://domain-slave1:8080/domain/rest/message
+
+This is a very basic usage of Infinispan. If you want to know more I recommend you to go to its webpage and read the docs.
 
