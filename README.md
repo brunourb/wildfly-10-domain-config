@@ -121,11 +121,11 @@ When slave is started, we should see the following:
 
 ## How to use Infinispan
 
-In this repo there is a simple war that can be installed in the domain. It simple allows requests to put a message in the default shared cache and allows requests to retrieve the last message saved. 
+In this repo there is a simple war that can be installed in the domain. It allows requests to put a message in the default shared cache and allows requests to retrieve the last message saved. 
 
 We are going to save the message in the master instance and retrieve the message from slave1. The message should be the same.
 
-First of all we have to generate the war. For that simple type:
+First of all we have to generate the war. For that, simply type:
 
         mvn clean package
 
@@ -139,7 +139,7 @@ And you will see that the war is deployed in both instances. If you see logs car
 
 ![alt text](https://raw.githubusercontent.com/marcoslop/wildfly-10-domain-config/master/images/infinispan_started.png "Infinispan connected")
 
-If you see this is that everything is going well :-)
+If you see this is because everything is going well :-)
 
 If we get the message from slave we should see that it´s empty:
 
@@ -149,7 +149,7 @@ Now we are going to save a message in master:
 
         curl http://domain-master:8080/domain/rest/message --data "message=Message saved in Master"
 
-If now we obtain again the message from slave we will receive the message "Message saved in Master"
+If now we obtain again the message from slavem we will receive the message "Message saved in Master"
 
         curl http://domain-slave1:8080/domain/rest/message
 
